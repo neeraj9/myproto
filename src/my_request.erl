@@ -95,10 +95,8 @@ handle_info({tcp,_Port, Info}, auth,
     {ok, #request{info=#user{
         name=User, password=Password
     }}, <<>>} = my_packet:decode_auth(Info),
-    lager:info("Hash=~p; Pass=~p~n", [to_hex(Hash),to_hex(Password)]),
-    Resp = Handler:check_pass(User, Hash, Password),
-    lager:info("Resp=~w", [Resp]),
-    case Resp of
+    lager:debug("Hash=~p; Pass=~p~n", [to_hex(Hash),to_hex(Password)]),
+    case Handler:check_pass(User, Hash, Password) of
         {ok, Password, HandlerState} ->
             Response = #response{
                 status = ?STATUS_OK,
