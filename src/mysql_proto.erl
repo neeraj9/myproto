@@ -482,7 +482,7 @@ end
 
 -spec 'param'(input(), index()) -> parse_result().
 'param'(Input, Index) ->
-  p(Input, Index, 'param', fun(I,D) -> (p_choose([fun 'param_var'/2, fun 'param_arithmetic'/2, fun 'param_function'/2, fun 'param_value'/2, fun 'param_all'/2, fun 'param_all_alias'/2, fun 'param_key_alias'/2, fun 'param_key'/2, fun 'param_sql'/2]))(I,D) end, fun(Node, _Idx) ->Node end).
+  p(Input, Index, 'param', fun(I,D) -> (p_choose([fun 'param_question'/2, fun 'param_var'/2, fun 'param_arithmetic'/2, fun 'param_function'/2, fun 'param_value'/2, fun 'param_all'/2, fun 'param_all_alias'/2, fun 'param_key_alias'/2, fun 'param_key'/2, fun 'param_sql'/2]))(I,D) end, fun(Node, _Idx) ->Node end).
 
 -spec 'param_sql'(input(), index()) -> parse_result().
 'param_sql'(Input, Index) ->
@@ -967,6 +967,10 @@ end
 -spec 'process'(input(), index()) -> parse_result().
 'process'(Input, Index) ->
   p(Input, Index, 'process', fun(I,D) -> (p_regexp(<<"(?i)process">>))(I,D) end, fun(_Node, _Idx) ->process end).
+
+-spec 'param_question'(input(), index()) -> parse_result().
+'param_question'(Input, Index) ->
+  p(Input, Index, 'param_question', fun(I,D) -> (p_string(<<"?">>))(I,D) end, fun(_Node, _Idx) ->"?" end).
 
 -spec 'keys'(input(), index()) -> parse_result().
 'keys'(Input, Index) ->
